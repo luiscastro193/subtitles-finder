@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Subtitles finder</title>
+		<meta name="author" content="Luis Castro Martín">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<style>
+			[type=number] {
+				max-width: 3em;
+			}
+		</style>
+	</head>
+
+	<body>
+		<p>Subtitles finder</p>
+		<form onsubmit="return false" oninput="findShow(this)">
+			<input type="text" name="series" onmouseenter="this.focus()" autofocus>
+			<span>&nbspS</span>
+			<input type="number" name="season" onmouseenter="this.focus()">
+			<span>&nbspE</span>
+			<input type="number" name="episode" onmouseenter="this.focus()">
+		</form>
+		<br>
+		<ul id="enlaces"></ul>
+		<script>
+			"use strict";
+			var ulist = document.getElementById("enlaces");
+			
+			function addLink(series, season, episode) {
+				var a = document.createElement("a");
+				var newItem = document.createElement("li");
+				
+				if (season.length < 2) season = '0' + season;
+				if (episode.length < 2) episode = '0' + episode;
+				
+				a.textContent = `${series} S${season}E${episode}`;
+				a.href = `http://www.addic7ed.com/srch.php?search=${encodeURIComponent(series)}+${season}x${episode}`;
+				a.target = "_blank";
+				a.onclick = function() { addLink(series, season, (parseInt(episode) + 1).toString()) };
+				newItem.appendChild(a);
+				ulist.appendChild(newItem);
+			}
+			
+			function findShow(form) {
+				ulist.innerHTML = '';
+				
+				if (form.series.value && form.season.value && form.episode.value)
+					addLink(form.series.value, form.season.value, form.episode.value);
+			}
+		</script>
+	</body>
+</html>
