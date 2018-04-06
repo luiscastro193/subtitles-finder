@@ -46,8 +46,8 @@
 			function findShow(form) {
 				ulist.innerHTML = '';
 				
-				if (form.series.value && form.season.value && form.episode.value)
-					addLink(form.series.value, form.season.value, form.episode.value);
+				if (form.series.value)
+					addLink(form.series.value, form.season.value || '1', form.episode.value || '1');
 			}
 		</script>
 	</body>
