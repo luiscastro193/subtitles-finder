@@ -36,7 +36,7 @@
 				if (episode.length < 2) episode = '0' + episode;
 				
 				a.textContent = `${series} S${season}E${episode}`;
-				a.href = `http://www.addic7ed.com/srch.php?search=${encodeURIComponent(series)}+${season}x${episode}`;
+				a.href = `http://www.addic7ed.com/search.php?search=${encodeURIComponent(series)}+${season}x${episode}`;
 				a.target = "_blank";
 				a.onclick = function() { if (!this.parentNode.nextSibling) addLink(series, season, (parseInt(episode) + 1).toString()) };
 				newItem.appendChild(a);
