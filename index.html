@@ -78,7 +78,7 @@
 			}
 			
 			function recall(form) {
-				if (localStorage[form.series.value]) {
+				if (isValid(form.series.value)) {
 					let data = JSON.parse(localStorage[form.series.value]);
 					form.season.value = data.season;
 					form.episode.value = data.episode;
