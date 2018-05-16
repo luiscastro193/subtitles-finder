@@ -46,11 +46,31 @@
 				ulist.appendChild(newItem);
 			}
 			
+			function addShow(series, form) {
+				var a = document.createElement("a");
+				var newItem = document.createElement("li");
+				
+				a.textContent = series;
+				a.href = "javascript:void(0)";
+				a.onclick = function() {
+					form.series.value = series;
+					form.series.oninput();
+					form.oninput();
+				};
+				newItem.appendChild(a);
+				ulist.appendChild(newItem);
+			}
+			
 			function findShow(form) {
 				ulist.innerHTML = '';
 				
 				if (form.series.value)
 					addLink(form.series.value, form.season.value || '1', form.episode.value || '1');
+				else {
+					for (let series in localStorage) {
+						if (localStorage.hasOwnProperty(series)) addShow(series, form);
+					}
+				}
 			}
 			
 			function recall(form) {
@@ -60,6 +80,8 @@
 					form.episode.value = data.episode;
 				}
 			}
+			
+			findShow(document.querySelector('form'));
 		</script>
 	</body>
 </html>
