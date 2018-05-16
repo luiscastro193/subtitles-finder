@@ -47,18 +47,30 @@
 			}
 			
 			function addShow(series, form) {
-				var a = document.createElement("a");
+				let data = JSON.parse(localStorage[series]);
+				var a1 = document.createElement("a");
+				var a2 = document.createElement("a");
 				var newItem = document.createElement("li");
 				
-				a.textContent = series;
-				a.href = "javascript:void(0)";
-				a.onclick = function() {
+				a1.textContent = series;
+				a1.href = "javascript:void(0)";
+				a1.onclick = function() {
 					form.series.value = series;
 					form.series.oninput();
 					form.oninput();
 					ulist.firstChild.firstChild.click();
 				};
-				newItem.appendChild(a);
+				
+				a2.textContent = "(remove)";
+				a2.href = "javascript:void(0)";
+				a2.onclick = function() {
+					localStorage.removeItem(series);
+					this.parentNode.parentNode.removeChild(this.parentNode);
+				};
+				
+				newItem.appendChild(a1);
+				newItem.insertAdjacentHTML('beforeend', "&nbsp&nbsp&nbsp");
+				newItem.appendChild(a2);
 				ulist.appendChild(newItem);
 			}
 			
