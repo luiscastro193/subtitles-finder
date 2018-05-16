@@ -68,7 +68,8 @@
 					addLink(form.series.value, form.season.value || '1', form.episode.value || '1');
 				else {
 					for (let series in localStorage) {
-						if (localStorage.hasOwnProperty(series)) addShow(series, form);
+						if (localStorage.hasOwnProperty(series) && JSON.parse(localStorage[series]).season)
+							addShow(series, form);
 					}
 				}
 			}
