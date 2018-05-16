@@ -16,7 +16,7 @@
 	<body>
 		<p>Subtitles finder</p>
 		<form onsubmit="return false" oninput="findShow(this)">
-			<input type="text" name="series" onmouseenter="this.focus()" autofocus>
+			<input type="text" name="series" oninput="recall(this.parentNode)" onmouseenter="this.focus()" autofocus>
 			<span>&nbspS</span>
 			<input type="number" name="season" onmouseenter="this.focus()">
 			<span>&nbspE</span>
@@ -38,7 +38,10 @@
 				a.textContent = `${series} S${season}E${episode}`;
 				a.href = `http://www.addic7ed.com/search.php?search=${encodeURIComponent(series)}+${season}x${episode}`;
 				a.target = "_blank";
-				a.onclick = function() { if (!this.parentNode.nextSibling) addLink(series, season, (parseInt(episode) + 1).toString()) };
+				a.onclick = function() {
+					if (!this.parentNode.nextSibling) addLink(series, season, (parseInt(episode) + 1).toString());
+					localStorage[series] = JSON.stringify({season, episode});
+				};
 				newItem.appendChild(a);
 				ulist.appendChild(newItem);
 			}
@@ -48,6 +51,14 @@
 				
 				if (form.series.value)
 					addLink(form.series.value, form.season.value || '1', form.episode.value || '1');
+			}
+			
+			function recall(form) {
+				if (localStorage[form.series.value]) {
+					let data = JSON.parse(localStorage[form.series.value]);
+					form.season.value = data.season;
+					form.episode.value = data.episode;
+				}
 			}
 		</script>
 	</body>
