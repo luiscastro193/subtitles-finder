@@ -16,11 +16,11 @@
 	<body>
 		<p>Subtitles finder</p>
 		<form onsubmit="return false" oninput="findShow(this)">
-			<input type="text" name="series" oninput="recall(this.parentNode)" onmouseenter="this.focus()" autofocus>
+			<input type="text" name="series" oninput="recall(this.parentNode)" onmouseenter="this.select()" autofocus>
 			<span>&nbspS</span>
-			<input type="number" name="season" onmouseenter="this.focus()">
+			<input type="number" name="season" onmouseenter="this.select()">
 			<span>&nbspE</span>
-			<input type="number" name="episode" onmouseenter="this.focus()">
+			<input type="number" name="episode" onmouseenter="this.select()">
 		</form>
 		<br>
 		<ul id="enlaces"></ul>
