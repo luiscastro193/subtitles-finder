@@ -63,8 +63,10 @@
 				a2.textContent = "(remove)";
 				a2.href = "javascript:void(0)";
 				a2.onclick = function() {
-					localStorage.removeItem(series);
-					this.parentNode.parentNode.removeChild(this.parentNode);
+					if (confirm(`Do you want to remove "${series}"?`)) {
+						localStorage.removeItem(series);
+						this.parentNode.parentNode.removeChild(this.parentNode);
+					}
 				};
 				a2.tabIndex = -1;
 				
