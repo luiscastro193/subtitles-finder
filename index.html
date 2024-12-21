@@ -1,116 +1,38 @@
 <!doctype html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<title>Subtitles finder</title>
-		<meta name="author" content="Luis Castro Martín">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="icon" href="https://luiscastro193.github.io/favicon.svg" type="image/svg+xml">
-		<link href="https://fonts.googleapis.com/css2?family=Lexend&display=swap" rel="stylesheet">
-		<style>
-			* {
-				font-family: 'Lexend', sans-serif;
-			}
-			
-			body {
-				background-color: black;
-				filter: invert(1);
-			}
-			
-			[type=number] {
-				max-width: 3em;
-			}
-		</style>
-	</head>
-
-	<body>
-		<p>Subtitles finder</p>
-		<form onsubmit="return false" oninput="findShow(this)">
-			<input type="search" name="series" oninput="recall(this.parentNode)" onmouseenter="this.select()" autofocus>
-			<span>&nbspS</span>
-			<input type="number" name="season" onmouseenter="this.select()">
-			<span>&nbspE</span>
-			<input type="number" name="episode" onmouseenter="this.select()">
-		</form>
-		<br>
-		<ul id="enlaces"></ul>
-		<script>
-			"use strict";
-			var ulist = document.getElementById("enlaces");
-			
-			function addLink(series, season, episode) {
-				var a = document.createElement("a");
-				var newItem = document.createElement("li");
-				
-				if (season.length < 2) season = '0' + season;
-				if (episode.length < 2) episode = '0' + episode;
-				
-				a.textContent = `${series} S${season}E${episode}`;
-				a.href = `https://www.addic7ed.com/search.php?search=${encodeURIComponent(series)}+${season}x${episode}`;
-				a.target = "_blank";
-				a.rel = "noopener";
-				a.onclick = function() {
-					if (!this.parentNode.nextSibling) addLink(series, season, (parseInt(episode) + 1).toString());
-					localStorage[series] = JSON.stringify({season, episode});
-				};
-				newItem.appendChild(a);
-				ulist.appendChild(newItem);
-			}
-			
-			function addShow(series, form) {
-				var a1 = document.createElement("a");
-				var a2 = document.createElement("a");
-				var newItem = document.createElement("li");
-				
-				a1.textContent = series;
-				a1.href = "javascript:void(0)";
-				a1.onclick = function() {
-					form.series.value = series;
-					form.series.oninput();
-					form.oninput();
-					ulist.firstChild.firstChild.click();
-				};
-				
-				a2.textContent = "(x)";
-				a2.href = "javascript:void(0)";
-				a2.onclick = function() {
-					if (confirm(`Do you want to remove "${series}"?`)) {
-						localStorage.removeItem(series);
-						this.parentNode.parentNode.removeChild(this.parentNode);
-					}
-				};
-				a2.tabIndex = -1;
-				
-				newItem.appendChild(a1);
-				newItem.insertAdjacentHTML('beforeend', "&nbsp&nbsp&nbsp");
-				newItem.appendChild(a2);
-				ulist.appendChild(newItem);
-			}
-			
-			function isValid(series) { try {
-				return JSON.parse(localStorage[series]).season;
-			} catch{} }
-			
-			function findShow(form) {
-				ulist.innerHTML = '';
-				
-				if (form.series.value)
-					addLink(form.series.value, form.season.value || '1', form.episode.value || '1');
-				else {
-					for (let series in localStorage)
-						if (isValid(series)) addShow(series, form);
-				}
-			}
-			
-			function recall(form) {
-				if (isValid(form.series.value)) {
-					let data = JSON.parse(localStorage[form.series.value]);
-					form.season.value = data.season;
-					form.episode.value = data.episode;
-				}
-			}
-			
-			findShow(document.querySelector('form'));
-		</script>
-	</body>
+<head>
+	<meta charset="utf-8">
+	<title>Subtitles finder</title>
+	<meta name="author" content="Luis Castro Martín">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="icon" href="https://luiscastro193.github.io/favicon.svg" type="image/svg+xml">
+	<link href="https://fonts.googleapis.com/css2?family=Lexend&display=swap" rel="stylesheet">
+	<script src="main.js" type="module"></script>
+	<style>
+		* {
+			font-family: 'Lexend', sans-serif;
+		}
+		
+		body {
+			background-color: black;
+			filter: invert(1);
+		}
+		
+		[type=number] {
+			max-width: 3em;
+		}
+	</style>
+</head>
+<body>
+	<p>Subtitles finder</p>
+	<form>
+		<input type="search" name="series" autofocus>
+		<span>&nbspS</span>
+		<input type="number" name="season">
+		<span>&nbspE</span>
+		<input type="number" name="episode">
+	</form>
+	<br>
+	<ul></ul>
+</body>
 </html>
