@@ -2,11 +2,6 @@
 	font-family: InterVariable, sans-serif;
 }
 
-body {
-	background-color: black;
-	filter: invert(1);
-}
-
 input[type=search] {
 	max-width: 10em;
 }
