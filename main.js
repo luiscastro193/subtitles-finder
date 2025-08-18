@@ -22,7 +22,6 @@ function addLink(series, season, episode) {
 	link.textContent = `${series} S${seasonString}E${episodeString}`;
 	link.href = `https://www.addic7ed.com/search.php?search=${encodeURIComponent(series)}+${seasonString}x${episodeString}`;
 	link.target = "_blank";
-	link.rel = "noopener";
 	
 	link.addEventListener('click', () => {
 		if (!item.nextElementSibling) {
